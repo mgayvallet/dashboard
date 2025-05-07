@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="login.css">
+    <title>Page de Connexion</title>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>Bienvenue</h1>
+            <p>Connectez-vous à votre compte</p>
+        </div>
+        <form class="login-form" id="loginForm">
+            <div class="form-group" id="emailGroup">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Entrez votre email">
+                <div class="error-message">Veuillez entrer une adresse email valide</div>
+            </div>
+            <div class="form-group" id="passwordGroup">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" placeholder="Entrez votre mot de passe">
+                <span class="password-toggle" id="passwordToggle">👁️</span>
+                <div class="error-message">Veuillez entrer votre mot de passe</div>
+            </div>
+            <div class="remember-forgot">
+                <div class="remember-me">
+                    <input type="checkbox" id="remember">
+                    <label for="remember">Se souvenir de moi</label>
+                </div>
+                <a href="#" class="forgot-password">Mot de passe oublié?</a>
+            </div>
+            <button type="submit" class="login-button" id="loginButton">Se connecter</button>
+            <div class="signup-link">
+                Pas encore de compte? <a href="#">S'inscrire</a>
+            </div>
+        </form>
+    </div>
+  <script src="main.js"></script>
+</body>
+</html>

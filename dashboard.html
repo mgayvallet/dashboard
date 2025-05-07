@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dashboard.css">
+    <title>Tableau de Bord</title>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="header">
+            <h1>Tableau de Bord</h1>
+            <div class="user-info">
+                <div class="user-avatar" id="userAvatar">U</div>
+                <div>
+                    <div class="user-name" id="userName">Utilisateur</div>
+                    <button class="logout-btn" id="logoutBtn">Se déconnecter</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-content">
+            <div class="dashboard-nav">
+                <div class="nav-item active">Vue d'ensemble</div>
+                <div class="nav-item">Tâches</div>
+                <div class="nav-item">Projets</div>
+                <div class="nav-item">Messages</div>
+                <div class="nav-item">Paramètres</div>
+            </div>
+
+            <!-- <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <div class="card-title">Projets</div>
+                        <div class="card-icon">📁</div>
+                    </div>
+                    <div class="card-value">12</div>
+                    <div class="card-description">Projets actifs</div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <div class="card-title">Tâches</div>
+                        <div class="card-icon">✓</div>
+                    </div>
+                    <div class="card-value">48</div>
+                    <div class="card-description">8 tâches en attente</div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <div class="card-title">Messages</div>
+                        <div class="card-icon">✉️</div>
+                    </div>
+                    <div class="card-value">24</div>
+                    <div class="card-description">5 non lus</div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <div class="card-title">Utilisateurs</div>
+                        <div class="card-icon">👥</div>
+                    </div>
+                    <div class="card-value">320</div>
+                    <div class="card-description">+12 cette semaine</div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-header">
+                    <div class="chart-title">Activité récente</div>
+                    <div class="chart-period">
+                        <button class="period-btn">Jour</button>
+                        <button class="period-btn active">Semaine</button>
+                        <button class="period-btn">Mois</button>
+                    </div>
+                </div>
+                <div class="chart" id="activityChart">
+                    <div class="chart-bar" style="height: 60%" data-value="120"></div>
+                    <div class="chart-bar" style="height: 80%" data-value="160"></div>
+                    <div class="chart-bar" style="height: 40%" data-value="80"></div>
+                    <div class="chart-bar" style="height: 70%" data-value="140"></div>
+                    <div class="chart-bar" style="height: 90%" data-value="180"></div>
+                    <div class="chart-bar" style="height: 50%" data-value="100"></div>
+                    <div class="chart-bar" style="height: 75%" data-value="150"></div>
+                </div>
+                <div class="chart-labels">
+                    <div class="chart-label">Lun</div>
+                    <div class="chart-label">Mar</div>
+                    <div class="chart-label">Mer</div>
+                    <div class="chart-label">Jeu</div>
+                    <div class="chart-label">Ven</div>
+                    <div class="chart-label">Sam</div>
+                    <div class="chart-label">Dim</div>
+                </div>
+            </div>
+
+            <div class="recent-activity">
+                <div class="activity-header">
+                    <div class="activity-title">Activités récentes</div>
+                    <div class="view-all">Voir tout</div>
+                </div>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-icon">📝</div>
+                        <div class="activity-content">
+                            <div class="activity-text">Vous avez créé un nouveau projet <strong>Refonte du site web</strong></div>
+                            <div class="activity-time">Il y a 2 heures</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">✉️</div>
+                        <div class="activity-content">
+                            <div class="activity-text">Nouveau message de <strong>Sophie Martin</strong></div>
+                            <div class="activity-time">Il y a 4 heures</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">✓</div>
+                        <div class="activity-content">
+                            <div class="activity-text">Tâche <strong>Mise à jour des données</strong> terminée</div>
+                            <div class="activity-time">Il y a 1 jour</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">👥</div>
+                        <div class="activity-content">
+                            <div class="activity-text"><strong>Thomas Dubois</strong> a rejoint votre équipe</div>
+                            <div class="activity-time">Il y a 2 jours</div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+
+        <div class="footer">
+            © 2025 Votre Entreprise. Tous droits réservés.
+        </div>
+    </div>
+    <script src="dashboard.js"></script>
+</body>
+</html>

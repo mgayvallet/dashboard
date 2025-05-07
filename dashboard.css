@@ -1,0 +1,411 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    margin: 0 auto;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.header {
+    background-color: white;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header h1 {
+    color: #333;
+    font-size: 24px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #667eea;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.user-name {
+    font-weight: 500;
+    color: #333;
+}
+
+.logout-btn {
+    background-color: transparent;
+    border: none;
+    color: #667eea;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: underline;
+}
+
+.dashboard-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-nav {
+    display: flex;
+    gap: 10px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    overflow-x: auto;
+}
+
+.nav-item {
+    padding: 10px 15px;
+    background-color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+
+.nav-item:hover {
+    background-color: #f0f2ff;
+}
+
+.nav-item.active {
+    background-color: #667eea;
+    color: white;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.dashboard-card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.card-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
+
+.card-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #f0f2ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #667eea;
+}
+
+.card-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.card-description {
+    font-size: 14px;
+    color: #666;
+}
+
+.chart-container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    margin-top: 20px;
+}
+
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.chart-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+}
+
+.chart-period {
+    display: flex;
+    gap: 10px;
+}
+
+.period-btn {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.period-btn:hover {
+    border-color: #667eea;
+    color: #667eea;
+}
+
+.period-btn.active {
+    background-color: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+.chart {
+    height: 250px;
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    padding-top: 20px;
+}
+
+.chart-bar {
+    flex: 1;
+    background-color: #667eea;
+    border-radius: 5px 5px 0 0;
+    transition: height 0.5s;
+    position: relative;
+    min-height: 20px;
+}
+
+.chart-bar:hover {
+    background-color: #5a6fe0;
+}
+
+.chart-bar::after {
+    content: attr(data-value);
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: #333;
+}
+
+.chart-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.chart-label {
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+    flex: 1;
+}
+
+.recent-activity {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    margin-top: 20px;
+}
+
+.activity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.activity-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+}
+
+.view-all {
+    color: #667eea;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.activity-item {
+    display: flex;
+    gap: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.activity-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f0f2ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #667eea;
+    flex-shrink: 0;
+}
+
+.activity-content {
+    flex: 1;
+}
+
+.activity-text {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.activity-time {
+    font-size: 12px;
+    color: #666;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .user-info {
+        flex-direction: column;
+    }
+
+    .chart {
+        height: 200px;
+    }
+}
+
+/* css of todo */
+
+.todo-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 100%;
+    margin: auto;
+    background: #f9f9f9;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: sans-serif;
+}
+
+.input-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+
+button {
+    padding: 0.5rem 1rem;
+    background: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#todo-list {
+    list-style: none;
+    padding: 0;
+}
+
+#todo-list li {
+    background: #fff;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#todo-list li.completed {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.suppBtn{
+    background-color: #e74c3c;
+}
+  
