@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let calendarDiv, todoDiv;
 
     logoutBtn.addEventListener('click', function () {
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
     });
 
     for (let i = 0; i < navItems.length; i++) {
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     const calendar = new FullCalendar.Calendar(calendarEl, {
                         locale: 'fr',
                         initialView: 'dayGridMonth',
-                        events: [],
+                        events: JSON.parse(localStorage.getItem('calendarEvents')) || [],
                         eventDidMount: function (info) {
                             const deleteBtn = document.createElement('span');
                             deleteBtn.textContent = ' 🗑';
@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             deleteBtn.addEventListener('click', () => {
                                 if (confirm("Supprimer cet événement ?")) {
                                     info.event.remove();
+                                    saveEvents();
                                 }
                             });
                             const titleEl = info.el.querySelector('.fc-event-title');
@@ -71,12 +72,23 @@ document.addEventListener('DOMContentLoaded', function () {
                                 start: date,
                                 allDay: true
                             });
+                            saveEvents();
                             titleInput.value = '';
                             dateInput.value = '';
                         } else {
                             alert("Veuillez remplir le titre et la date.");
                         }
                     });
+
+                    function saveEvents() {
+                        const events = calendar.getEvents();
+                        const eventData = events.map(event => ({
+                            title: event.title,
+                            start: event.start.toISOString(),
+                            end: event.end ? event.end.toISOString() : null
+                        }));
+                        localStorage.setItem('calendarEvents', JSON.stringify(eventData));
+                    }
                 }
 
                 calendarDiv.style.display = 'block';
@@ -110,11 +122,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function createTodoApp(container) {
-        const todos = [
-            { id: "1", text: "Acheter des courses", completed: false },
-            { id: "2", text: "Appeler le médecin", completed: true },
-            { id: "3", text: "Finir le projet", completed: false }
-        ];
+        let todos = JSON.parse(localStorage.getItem('todos')) || [];
 
         const render = () => {
             updateList();
@@ -153,6 +161,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             break;
                         }
                     }
+                    saveTodos();
                     updateList();
                 });
             }
@@ -167,6 +176,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             break;
                         }
                     }
+                    saveTodos();
                     updateList();
                 });
             }
@@ -179,6 +189,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (text) {
                     todos.push({ id: Date.now().toString(), text, completed: false });
                     input.value = '';
+                    saveTodos();
                     updateList();
                 }
             }
@@ -191,10 +202,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (text) {
                     todos.push({ id: Date.now().toString(), text, completed: false });
                     input.value = '';
+                    saveTodos();
                     updateList();
                 }
             }
         });
+
+        function saveTodos() {
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
 
         render();
     }
