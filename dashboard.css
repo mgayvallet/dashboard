@@ -353,19 +353,6 @@ body {
 
 /* css of todo */
 
-/* .todo-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    max-width: 100%;
-    margin: auto;
-    background: #f9f9f9;
-    padding: 1rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    font-family: sans-serif;
-} */
-
 .todo-container {
     max-width: 500px;
     margin: 30px auto;
@@ -459,5 +446,132 @@ body {
     font-size: 15px;
     color: #555;
     text-align: center;
+  }
+  
+  /* calendar */
+  
+  #calendar {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    height: 600px;
+  }
+
+  .calendar-controls {
+    margin-bottom: 10px;
+  }
+  
+  .calendar-controls input,
+  .calendar-controls button {
+    margin-right: 5px;
+    padding: 5px;
+  }
+
+  
+  .calendar-heading {
+    background-color: #f4f6f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+
+  .calendar-container {
+    max-width: 900px;
+    margin: 0 auto;
+    font-family: 'Arial', sans-serif;
+  }
+
+  .calendar-title {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .calendar-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .calendar-controls input {
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 45%;
+  }
+
+  #eventTitleInput {
+    margin-right: 10px;
+  }
+
+  #addEventBtn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  #addEventBtn:hover {
+    background-color: #45a049;
+  }
+
+  .fc-event {
+    border-radius: 8px;
+    font-size: 14px;
+    padding: 8px;
+    background-color: #2980b9;
+    color: white;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+
+  .fc-event-title {
+    font-weight: bold;
+    color: white;
+  }
+
+  .fc-event-title span {
+    margin-left: 10px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  .fc-event-title span:hover {
+    color: #e74c3c;
+  }
+
+  .fc-daygrid-day-number {
+    font-weight: bold;
+  }
+
+  .fc-daygrid-day {
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+  }
+
+  .fc-daygrid-day:hover {
+    background-color: #f4f4f4;
+  }
+
+  .fc-toolbar {
+    background-color: #2980b9;
+    padding: 10px;
+    color: white;
+    border-radius: 5px;
+  }
+
+  .fc-toolbar-title {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .fc-daygrid-day-top {
+    font-weight: bold;
   }
   
