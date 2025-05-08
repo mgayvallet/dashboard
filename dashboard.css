@@ -575,3 +575,47 @@ body {
     font-weight: bold;
   }
   
+
+
+  .activity-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.liActivite {
+    background-color: #f4f7fa;
+    border: 1px solid #ddd;
+    border-left: 5px solid #4caf50;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.liActivite:hover {
+    background-color: #e8f5e9;
+}
+
+.activity-entry {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.activity-icon {
+    font-size: 1.2em;
+    margin-right: 10px;
+}
+
+.activity-text {
+    flex: 1;
+    font-weight: 500;
+    color: #333;
+}
+
+.activity-time {
+    font-size: 0.9em;
+    color: #888;
+    margin-left: 10px;
+}
