@@ -29,109 +29,130 @@
                 <div class="nav-item">Paramètres</div>
             </div>
 
-            <!-- <div class="dashboard-grid">
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <div class="card-title">Projets</div>
-                        <div class="card-icon">📁</div>
+            <div class="summary-container" id="summaryContainer">
+                <h2 class="summary-title">Résumé de vos activités</h2>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-title">Tâches totales</div>
+                            <div class="card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m9 12 2 2 4-4"/></svg>
+                            </div>
+                        </div>
+                        <div class="card-value" id="totalTasks">0</div>
+                        <div class="card-description">Nombre total de tâches</div>
                     </div>
-                    <div class="card-value">12</div>
-                    <div class="card-description">Projets actifs</div>
+
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-title">Tâches terminées</div>
+                            <div class="card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m9 12 2 2 4-4"/></svg>
+                            </div>
+                        </div>
+                        <div class="card-value" id="completedTasks">0</div>
+                        <div class="card-description">Tâches complétées</div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-title">Événements à venir</div>
+                            <div class="card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 10h18"/><path d="M16 2v2"/><path d="M8 2v2"/></svg>
+                            </div>
+                        </div>
+                        <div class="card-value" id="upcomingEvents">0</div>
+                        <div class="card-description">Événements planifiés</div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-title">Taux de complétion</div>
+                            <div class="card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M5.3 5.3 12 12"/></svg>
+                            </div>
+                        </div>
+                        <div class="card-value" id="completionRate">0%</div>
+                        <div class="card-description">Pourcentage de tâches terminées</div>
+                    </div>
                 </div>
 
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <div class="card-title">Tâches</div>
-                        <div class="card-icon">✓</div>
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div class="chart-title">Progression des tâches</div>
+                        <div class="chart-period">
+                            <button class="period-btn active">Semaine</button>
+                            <button class="period-btn">Mois</button>
+                            <button class="period-btn">Année</button>
+                        </div>
                     </div>
-                    <div class="card-value">48</div>
-                    <div class="card-description">8 tâches en attente</div>
+                    <div class="chart" id="taskChart">
+                        <div class="chart-bar" style="height: 60%;" data-value="6"></div>
+                        <div class="chart-bar" style="height: 40%;" data-value="4"></div>
+                        <div class="chart-bar" style="height: 80%;" data-value="8"></div>
+                        <div class="chart-bar" style="height: 30%;" data-value="3"></div>
+                        <div class="chart-bar" style="height: 50%;" data-value="5"></div>
+                        <div class="chart-bar" style="height: 70%;" data-value="7"></div>
+                        <div class="chart-bar" style="height: 90%;" data-value="9"></div>
+                    </div>
+                    <div class="chart-labels">
+                        <div class="chart-label">Lun</div>
+                        <div class="chart-label">Mar</div>
+                        <div class="chart-label">Mer</div>
+                        <div class="chart-label">Jeu</div>
+                        <div class="chart-label">Ven</div>
+                        <div class="chart-label">Sam</div>
+                        <div class="chart-label">Dim</div>
+                    </div>
                 </div>
 
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <div class="card-title">Messages</div>
-                        <div class="card-icon">✉️</div>
+                <div class="overview-sections">
+                    <div class="overview-section">
+                        <div class="section-header">
+                            <h3>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m9 12 2 2 4-4"/></svg>
+                                Tâches récentes
+                            </h3>
+                            <button class="view-all">Voir tout</button>
+                        </div>
+                        <div class="section-content">
+                            <ul class="overview-list" id="recentTasks">
+                                <li class="overview-item empty">Chargement des tâches...</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="card-value">24</div>
-                    <div class="card-description">5 non lus</div>
+
+                    <div class="overview-section">
+                        <div class="section-header">
+                            <h3>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 10h18"/><path d="M16 2v2"/><path d="M8 2v2"/></svg>
+                                Événements à venir
+                            </h3>
+                            <button class="view-all">Voir tout</button>
+                        </div>
+                        <div class="section-content">
+                            <ul class="overview-list" id="upcomingEventsList">
+                                <li class="overview-item empty">Chargement des événements...</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <div class="card-title">Utilisateurs</div>
-                        <div class="card-icon">👥</div>
+                <div class="recent-activity">
+                    <div class="activity-header">
+                        <div class="activity-title">Activité récente</div>
+                        <div class="view-all">Voir tout</div>
                     </div>
-                    <div class="card-value">320</div>
-                    <div class="card-description">+12 cette semaine</div>
+                    <div class="activity-list" id="recentActivity">
+                        <div class="activity-item">
+                            <div class="activity-content">
+                                <div class="activity-text">Chargement des activités...</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="chart-container">
-                <div class="chart-header">
-                    <div class="chart-title">Activité récente</div>
-                    <div class="chart-period">
-                        <button class="period-btn">Jour</button>
-                        <button class="period-btn active">Semaine</button>
-                        <button class="period-btn">Mois</button>
-                    </div>
-                </div>
-                <div class="chart" id="activityChart">
-                    <div class="chart-bar" style="height: 60%" data-value="120"></div>
-                    <div class="chart-bar" style="height: 80%" data-value="160"></div>
-                    <div class="chart-bar" style="height: 40%" data-value="80"></div>
-                    <div class="chart-bar" style="height: 70%" data-value="140"></div>
-                    <div class="chart-bar" style="height: 90%" data-value="180"></div>
-                    <div class="chart-bar" style="height: 50%" data-value="100"></div>
-                    <div class="chart-bar" style="height: 75%" data-value="150"></div>
-                </div>
-                <div class="chart-labels">
-                    <div class="chart-label">Lun</div>
-                    <div class="chart-label">Mar</div>
-                    <div class="chart-label">Mer</div>
-                    <div class="chart-label">Jeu</div>
-                    <div class="chart-label">Ven</div>
-                    <div class="chart-label">Sam</div>
-                    <div class="chart-label">Dim</div>
-                </div>
-            </div>
-
-            <div class="recent-activity">
-                <div class="activity-header">
-                    <div class="activity-title">Activités récentes</div>
-                    <div class="view-all">Voir tout</div>
-                </div>
-                <div class="activity-list">
-                    <div class="activity-item">
-                        <div class="activity-icon">📝</div>
-                        <div class="activity-content">
-                            <div class="activity-text">Vous avez créé un nouveau projet <strong>Refonte du site web</strong></div>
-                            <div class="activity-time">Il y a 2 heures</div>
-                        </div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-icon">✉️</div>
-                        <div class="activity-content">
-                            <div class="activity-text">Nouveau message de <strong>Sophie Martin</strong></div>
-                            <div class="activity-time">Il y a 4 heures</div>
-                        </div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-icon">✓</div>
-                        <div class="activity-content">
-                            <div class="activity-text">Tâche <strong>Mise à jour des données</strong> terminée</div>
-                            <div class="activity-time">Il y a 1 jour</div>
-                        </div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-icon">👥</div>
-                        <div class="activity-content">
-                            <div class="activity-text"><strong>Thomas Dubois</strong> a rejoint votre équipe</div>
-                            <div class="activity-time">Il y a 2 jours</div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
