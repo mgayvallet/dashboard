@@ -5,11 +5,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const summaryContainer = document.getElementById("summaryContainer")
     let calendarDiv, todoDiv, activityDiv, settingsDiv
   
-    // Load theme from localStorage
     const savedTheme = localStorage.getItem("userTheme")
     if (savedTheme === "dark") {
       document.body.classList.add("dark-theme")
     }
+  
+    initLanguage()
   
     logoutBtn.addEventListener("click", () => {
       window.location.href = "index.html"
@@ -45,6 +46,19 @@ document.addEventListener("DOMContentLoaded", () => {
       })
     }
   
+    function initLanguage() {
+      if (typeof window.translations === "undefined") {
+        const script = document.createElement("script")
+        script.src = "translations.js"
+        script.onload = () => {
+          window.translations.translateInterface()
+        }
+        document.head.appendChild(script)
+      } else {
+        window.translations.translateInterface()
+      }
+    }
+  
     function showTodoSection() {
       if (!todoDiv) {
         todoDiv = document.createElement("div")
@@ -64,6 +78,10 @@ document.addEventListener("DOMContentLoaded", () => {
         createTodoApp(todoDiv.querySelector(".todo-container"))
       }
       todoDiv.style.display = "block"
+  
+      if (typeof window.translations !== "undefined") {
+        window.translations.translateInterface()
+      }
     }
   
     function showCalendarSection() {
@@ -86,8 +104,9 @@ document.addEventListener("DOMContentLoaded", () => {
         let calendar
   
         const initializeCalendar = () => {
+          const currentLang = localStorage.getItem("userLanguage") || "fr"
           calendar = new FullCalendar.Calendar(calendarDiv.querySelector("#calendar"), {
-            locale: "fr",
+            locale: currentLang,
             initialView: "dayGridMonth",
             events: JSON.parse(localStorage.getItem("calendarEvents")) || [],
             eventDidMount: (info) => {
@@ -96,7 +115,10 @@ document.addEventListener("DOMContentLoaded", () => {
               deleteBtn.style.cursor = "pointer"
               deleteBtn.style.color = "red"
               deleteBtn.addEventListener("click", () => {
-                if (confirm("Supprimer cet événement ?")) {
+                const t = window.translations
+                  ? window.translations.getTranslation()
+                  : { deleteEvent: "Supprimer cet événement ?" }
+                if (confirm(t.deleteEvent)) {
                   info.event.remove()
                   saveEvents()
                 }
@@ -112,11 +134,16 @@ document.addEventListener("DOMContentLoaded", () => {
         calendarDiv.querySelector("#addEventBtn").addEventListener("click", () => {
           const title = calendarDiv.querySelector("#eventTitleInput").value.trim()
           const date = calendarDiv.querySelector("#eventDateInput").value
+  
+          const t = window.translations
+            ? window.translations.getTranslation()
+            : { fillTitleDate: "Veuillez remplir le titre et la date." }
+  
           if (title && date) {
             calendar.addEvent({ title, start: date, allDay: true })
             saveEvents()
           } else {
-            alert("Veuillez remplir le titre et la date.")
+            alert(t.fillTitleDate)
           }
         })
   
@@ -133,6 +160,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
       calendarDiv.style.display = "block"
+  
+      if (typeof window.translations !== "undefined") {
+        window.translations.translateInterface()
+      }
     }
   
     function showActivitySection() {
@@ -149,15 +180,17 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       activityDiv.style.display = "block"
       displayCompletedTasks()
+  
+      if (typeof window.translations !== "undefined") {
+        window.translations.translateInterface()
+      }
     }
   
     function showSettingsSection() {
       if (!settingsDiv) {
-        // Create settings container
         settingsDiv = document.createElement("div")
         settingsDiv.className = "settings-page"
   
-        // Load the settings CSS if not already loaded
         if (!document.querySelector('link[href="settings.css"]')) {
           const link = document.createElement("link")
           link.rel = "stylesheet"
@@ -165,14 +198,16 @@ document.addEventListener("DOMContentLoaded", () => {
           document.head.appendChild(link)
         }
   
-        // Create settings HTML structure
         settingsDiv.innerHTML = createSettingsHTML()
         dashboardContent.appendChild(settingsDiv)
   
-        // Initialize settings functionality
         initializeSettings(settingsDiv)
       }
       settingsDiv.style.display = "block"
+  
+      if (typeof window.translations !== "undefined") {
+        window.translations.translateInterface()
+      }
     }
   
     function createSettingsHTML() {
@@ -281,7 +316,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   
     function initializeSettings(container) {
-      // Get form elements
       const userNameInput = container.querySelector("#settingsUserName")
       const userEmailInput = container.querySelector("#settingsUserEmail")
       const userAvatarInput = container.querySelector("#settingsUserAvatar")
@@ -295,7 +329,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const saveBtn = container.querySelector("#saveSettingsBtn")
       const saveMessage = container.querySelector("#settingsSaveMessage")
   
-      // Load saved settings from localStorage
       const savedTheme = localStorage.getItem("userTheme") || "light"
       const savedLanguage = localStorage.getItem("userLanguage") || "fr"
       const savedNotifications = localStorage.getItem("userNotifications") !== "false"
@@ -303,13 +336,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const savedEmail = localStorage.getItem("userEmail") || "utilisateur@exemple.com"
       const savedAvatar = localStorage.getItem("userAvatar") || "U"
   
-      // Set initial values
       userNameInput.value = savedUserName
       userEmailInput.value = savedEmail
       userAvatarInput.value = savedAvatar
       languageSelect.value = savedLanguage
   
-      // Set active states for toggle buttons
       if (savedTheme === "light") {
         lightThemeBtn.classList.add("active")
       } else {
@@ -322,7 +353,6 @@ document.addEventListener("DOMContentLoaded", () => {
         notificationsOffBtn.classList.add("active")
       }
   
-      // Theme toggle buttons
       lightThemeBtn.addEventListener("click", () => {
         lightThemeBtn.classList.add("active")
         darkThemeBtn.classList.remove("active")
@@ -333,7 +363,6 @@ document.addEventListener("DOMContentLoaded", () => {
         lightThemeBtn.classList.remove("active")
       })
   
-      // Notifications toggle buttons
       notificationsOnBtn.addEventListener("click", () => {
         notificationsOnBtn.classList.add("active")
         notificationsOffBtn.classList.remove("active")
@@ -344,24 +373,26 @@ document.addEventListener("DOMContentLoaded", () => {
         notificationsOnBtn.classList.remove("active")
       })
   
-      // Logout button
       logoutBtn.addEventListener("click", () => {
         window.location.href = "index.html"
       })
   
-      // Delete account button
       deleteAccountBtn.addEventListener("click", () => {
-        if (confirm("Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.")) {
-          // Clear all localStorage data
+        const t = window.translations
+          ? window.translations.getTranslation()
+          : {
+              deleteConfirm: "Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.",
+              accountDeleted: "Votre compte a été supprimé avec succès.",
+            }
+  
+        if (confirm(t.deleteConfirm)) {
           localStorage.clear()
-          alert("Votre compte a été supprimé avec succès.")
+          alert(t.accountDeleted)
           window.location.href = "index.html"
         }
       })
   
-      // Save settings button
       saveBtn.addEventListener("click", () => {
-        // Get current values
         const userName = userNameInput.value.trim()
         const userEmail = userEmailInput.value.trim()
         const userAvatar = userAvatarInput.value.trim().charAt(0).toUpperCase()
@@ -369,18 +400,24 @@ document.addEventListener("DOMContentLoaded", () => {
         const theme = lightThemeBtn.classList.contains("active") ? "light" : "dark"
         const notifications = notificationsOnBtn.classList.contains("active")
   
-        // Validate inputs
+        const t = window.translations
+          ? window.translations.getTranslation()
+          : {
+              enterUsername: "Veuillez entrer un nom d'utilisateur.",
+              enterValidEmail: "Veuillez entrer une adresse email valide.",
+              settingsSaved: "Paramètres enregistrés avec succès!",
+            }
+  
         if (!userName) {
-          alert("Veuillez entrer un nom d'utilisateur.")
+          alert(t.enterUsername)
           return
         }
   
         if (!userEmail || !userEmail.includes("@")) {
-          alert("Veuillez entrer une adresse email valide.")
+          alert(t.enterValidEmail)
           return
         }
   
-        // Save to localStorage
         localStorage.setItem("userName", userName)
         localStorage.setItem("userEmail", userEmail)
         localStorage.setItem("userAvatar", userAvatar || "U")
@@ -388,34 +425,53 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("userTheme", theme)
         localStorage.setItem("userNotifications", notifications.toString())
   
-        // Update UI elements outside this component
         const userNameElement = document.getElementById("userName")
         if (userNameElement) userNameElement.textContent = userName
   
         const userAvatarElement = document.getElementById("userAvatar")
         if (userAvatarElement) userAvatarElement.textContent = userAvatar || "U"
   
-        // Apply theme
         if (theme === "dark") {
           document.body.classList.add("dark-theme")
         } else {
           document.body.classList.remove("dark-theme")
         }
   
-        // Show save confirmation
-        saveMessage.textContent = "Paramètres enregistrés avec succès!"
+        saveMessage.textContent = t.settingsSaved
         saveMessage.style.display = "block"
         setTimeout(() => {
           saveMessage.style.display = "none"
         }, 3000)
+  
+        if (typeof window.translations !== "undefined") {
+          window.translations.translateInterface()
+        }
+  
+        if (calendarDiv) {
+          const calendarEl = calendarDiv.querySelector("#calendar")
+          if (calendarEl) {
+            const calendar = FullCalendar.getCalendarById(calendarEl.id)
+            if (calendar) {
+              calendar.setOption("locale", language)
+              calendar.render()
+            }
+          }
+        }
       })
   
-      // Handle avatar input to ensure only one character
       userAvatarInput.addEventListener("input", function () {
         if (this.value.length > 1) {
           this.value = this.value.charAt(0).toUpperCase()
         } else if (this.value.length === 1) {
           this.value = this.value.toUpperCase()
+        }
+      })
+  
+      languageSelect.addEventListener("change", function () {
+        localStorage.setItem("userLanguage", this.value)
+  
+        if (typeof window.translations !== "undefined") {
+          window.translations.translateInterface()
         }
       })
     }
@@ -441,7 +497,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
   
         const completedCount = todos.filter((t) => t.completed).length
-        summary.textContent = `${completedCount} terminée(s) sur ${todos.length} tâche(s)`
+  
+        if (typeof window.translations !== "undefined") {
+          const t = window.translations.getTranslation()
+          summary.textContent = `${completedCount} ${t.taskCompleted.toLowerCase()}(s) ${t.timeUnits.day[0]} ${todos.length} ${t.tasks.toLowerCase()}`
+        } else {
+          summary.textContent = `${completedCount} terminée(s) sur ${todos.length} tâche(s)`
+        }
   
         const checkboxes = list.querySelectorAll('input[type="checkbox"]')
         for (let i = 0; i < checkboxes.length; i++) {
@@ -509,20 +571,31 @@ document.addEventListener("DOMContentLoaded", () => {
       const todos = JSON.parse(localStorage.getItem("todos")) || []
       const completed = todos.filter((t) => t.completed).sort((a, b) => new Date(b.completedAt) - new Date(a.completedAt))
   
+      const t = window.translations
+        ? window.translations.getTranslation()
+        : {
+            noCompletedTasks: "Aucune tâche terminée pour le moment.",
+            taskCompletedText: "Tâche terminée:",
+          }
+  
       if (completed.length === 0) {
-        activityList.innerHTML = `<li>Aucune tâche terminée pour le moment.</li>`
+        activityList.innerHTML = `<li>${t.noCompletedTasks}</li>`
         return
       }
   
       for (let i = 0; i < completed.length; i++) {
-        const t = completed[i]
+        const task = completed[i]
         const li = document.createElement("li")
         li.classList.add("liActivite")
-        const timeAgo = formatTimeAgo(t.completedAt)
+  
+        const timeAgo = window.translations
+          ? window.translations.formatTimeAgo(task.completedAt)
+          : formatTimeAgo(task.completedAt)
+  
         li.innerHTML = `
                   <div class="activity-entry">
                       <span class="activity-icon">✅</span>
-                      <span class="activity-text">${t.text}</span>
+                      <span class="activity-text">${t.taskCompletedText} <strong>${task.text}</strong></span>
                       <span class="activity-time">${timeAgo}</span>
                   </div>
               `
@@ -582,22 +655,39 @@ document.addEventListener("DOMContentLoaded", () => {
       if (upcomingEventsEl) upcomingEventsEl.textContent = upcomingEvents
       if (completionRateEl) completionRateEl.textContent = completionRate + "%"
   
+      const t = window.translations
+        ? window.translations.getTranslation()
+        : {
+            noTasks: "Aucune tâche pour le moment",
+            inProgress: "En cours",
+            taskCompleted: "Terminé",
+            noEvents: "Aucun événement planifié",
+            noActivity: "Aucune activité récente",
+          }
+  
       if (recentTasksList) {
         recentTasksList.innerHTML = ""
         if (todos.length === 0) {
-          recentTasksList.innerHTML = '<li class="overview-item empty">Aucune tâche pour le moment</li>'
+          recentTasksList.innerHTML = `<li class="overview-item empty">${t.noTasks}</li>`
         } else {
           const recentTodos = todos.slice(0, 5)
           for (let i = 0; i < recentTodos.length; i++) {
             const todo = recentTodos[i]
             const li = document.createElement("li")
             li.className = `overview-item ${todo.completed ? "completed" : ""}`
+  
+            const timeAgo = todo.completed
+              ? window.translations
+                ? window.translations.formatTimeAgo(todo.completedAt)
+                : formatTimeAgo(todo.completedAt)
+              : t.inProgress
+  
             li.innerHTML = `
                           <div class="overview-item-status">${todo.completed ? "✅" : "⏳"}</div>
                           <div class="overview-item-content">
                               <div class="overview-item-title">${todo.text}</div>
                               <div class="overview-item-meta">
-                                  ${todo.completed ? `Terminé ${formatTimeAgo(todo.completedAt)}` : "En cours"}
+                                  ${todo.completed ? `${t.taskCompleted} ${timeAgo}` : t.inProgress}
                               </div>
                           </div>
                       `
@@ -614,7 +704,7 @@ document.addEventListener("DOMContentLoaded", () => {
           .slice(0, 5)
   
         if (upcomingEventsArray.length === 0) {
-          upcomingEventsList.innerHTML = '<li class="overview-item empty">Aucun événement planifié</li>'
+          upcomingEventsList.innerHTML = `<li class="overview-item empty">${t.noEvents}</li>`
         } else {
           for (let i = 0; i < upcomingEventsArray.length; i++) {
             const event = upcomingEventsArray[i]
@@ -643,7 +733,7 @@ document.addEventListener("DOMContentLoaded", () => {
           recentActivityList.innerHTML = `
                       <div class="activity-item">
                           <div class="activity-content">
-                              <div class="activity-text">Aucune activité récente</div>
+                              <div class="activity-text">${t.noActivity}</div>
                           </div>
                       </div>
                   `
@@ -652,13 +742,18 @@ document.addEventListener("DOMContentLoaded", () => {
             const activity = activities[i]
             const div = document.createElement("div")
             div.className = "activity-item"
+  
+            const timeAgo = window.translations
+              ? window.translations.formatTimeAgo(activity.completedAt)
+              : formatTimeAgo(activity.completedAt)
+  
             div.innerHTML = `
                           <div class="activity-icon">✅</div>
                           <div class="activity-content">
                               <div class="activity-text">
-                                  Tâche terminée: <strong>${activity.text}</strong>
+                                  ${t.taskCompletedText} <strong>${activity.text}</strong>
                               </div>
-                              <div class="activity-time">${formatTimeAgo(activity.completedAt)}</div>
+                              <div class="activity-time">${timeAgo}</div>
                           </div>
                       `
             recentActivityList.appendChild(div)
@@ -674,12 +769,16 @@ document.addEventListener("DOMContentLoaded", () => {
       const chartBars = document.querySelectorAll(".chart-bar")
       const chartLabels = document.querySelectorAll(".chart-label")
   
+      if (window.translations) {
+        window.translations.updateChartLabels(period)
+      }
+  
       const now = new Date()
       const dayOfWeek = now.getDay() || 7
   
       let startDate, endDate, dateFormat, groupBy
   
-      if (period === "Semaine") {
+      if (period === getTranslationValue("week") || period === "Semaine") {
         startDate = new Date(now)
         startDate.setDate(now.getDate() - dayOfWeek + 1)
         startDate.setHours(0, 0, 0, 0)
@@ -691,12 +790,14 @@ document.addEventListener("DOMContentLoaded", () => {
         dateFormat = { weekday: "short" }
         groupBy = "day"
   
-        for (let i = 0; i < chartLabels.length; i++) {
-          const day = new Date(startDate)
-          day.setDate(startDate.getDate() + i)
-          chartLabels[i].textContent = day.toLocaleDateString("fr-FR", { weekday: "short" }).substring(0, 3)
+        if (!window.translations) {
+          for (let i = 0; i < chartLabels.length; i++) {
+            const day = new Date(startDate)
+            day.setDate(startDate.getDate() + i)
+            chartLabels[i].textContent = day.toLocaleDateString("fr-FR", { weekday: "short" }).substring(0, 3)
+          }
         }
-      } else if (period === "Mois") {
+      } else if (period === getTranslationValue("month") || period === "Mois") {
         startDate = new Date(now.getFullYear(), now.getMonth(), 1)
         endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0)
   
@@ -704,18 +805,22 @@ document.addEventListener("DOMContentLoaded", () => {
         dateFormat = { day: "numeric" }
         groupBy = "week"
   
-        for (let i = 0; i < chartLabels.length; i++) {
-          chartLabels[i].textContent = `S${i + 1}`
+        if (!window.translations) {
+          for (let i = 0; i < chartLabels.length; i++) {
+            chartLabels[i].textContent = `S${i + 1}`
+          }
         }
-      } else if (period === "Année") {
+      } else if (period === getTranslationValue("year") || period === "Année") {
         startDate = new Date(now.getFullYear(), 0, 1)
         endDate = new Date(now.getFullYear(), 11, 31)
         dateFormat = { month: "short" }
         groupBy = "month"
   
-        const months = ["Jan", "Fév", "Mar", "Avr", "Mai", "Jun", "Jul", "Aoû", "Sep", "Oct", "Nov", "Déc"]
-        for (let i = 0; i < chartLabels.length && i < months.length; i++) {
-          chartLabels[i].textContent = months[i]
+        if (!window.translations) {
+          const months = ["Jan", "Fév", "Mar", "Avr", "Mai", "Jun", "Jul", "Aoû", "Sep", "Oct", "Nov", "Déc"]
+          for (let i = 0; i < chartLabels.length && i < months.length; i++) {
+            chartLabels[i].textContent = months[i]
+          }
         }
       }
   
@@ -781,19 +886,33 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   
+    function getTranslationValue(key) {
+      return window.translations ? window.translations.getTranslation()[key] : null
+    }
+  
     function formatDate(dateString) {
       const date = new Date(dateString)
-      return date.toLocaleDateString("fr-FR", {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      })
+      const currentLang = localStorage.getItem("userLanguage") || "fr"
+  
+      return date.toLocaleDateString(
+        currentLang === "en" ? "en-US" : currentLang === "es" ? "es-ES" : currentLang === "de" ? "de-DE" : "fr-FR",
+        {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        },
+      )
     }
   
     function formatTimeAgo(isoDate) {
       if (!isoDate) return ""
+  
+      if (window.translations) {
+        return window.translations.formatTimeAgo(isoDate)
+      }
+  
       const seconds = Math.floor((Date.now() - new Date(isoDate).getTime()) / 1000)
       const intervals = [
         { label: "an", seconds: 31536000 },
