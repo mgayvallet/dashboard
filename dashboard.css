@@ -762,6 +762,7 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  color: white;
 }
 
 .settings-save-message {
